@@ -26,7 +26,7 @@ object Cautatoru {
   val parser = new QueryParser(Version.LUCENE_4_10_2, "ip", analyzer)
 
   def main(args: Array[String]): Unit = {
-    display(maximumIp)
+//    display(maximumIp)
 
     display(byIp("178.154.179.250"))
     
@@ -61,23 +61,26 @@ object Cautatoru {
     val start = System.currentTimeMillis()
     val sum = try {
       val query = parser.parse(ip)
-      val results = searcher.search(query, 50)
+      val results = searcher.search(query, 5000000)
+      var bigN = BigDecimal.valueOf(0)
       val byteResults = results.scoreDocs.map{
         sd => 
           val doc = searcher.doc(sd.doc)
-          doc.getField("bytes").numericValue().floatValue()
+          val tempVal = doc.getField("bytes").numericValue().floatValue()
+          
+          bigN = bigN.+(BigDecimal.valueOf(tempVal))
       }.toList
       
 //      val numTotalHits = results.totalHits
 //      System.out.println(s"Pentru ip-ul $ip am un total de $numTotalHits intrari si ${byteResults.sum} bytes")
-      byteResults.sum
+      bigN
     } catch {
       case ex: Exception => println(s"Ip-ul $ip nu a putut fi gasit!")
-      0
+      BigDecimal.valueOf(0)
     }
     val time = System.currentTimeMillis() - start
     IpSum(ip, sum, time)
   }
   
-  case class IpSum(ip: String, bytes: Float, time: Long)
+  case class IpSum(ip: String, bytes: BigDecimal, time: Long)
 }
