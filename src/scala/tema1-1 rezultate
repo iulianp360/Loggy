@@ -1,0 +1,67 @@
+1. Given an IP, break down how much bandwidth has been used by status code (200, 404, 500, etc). Give the results in bytes as well as in percentages of the total.
+2. Without an IP given, print the global bandwidth statistics, broken down by status code, in bytes as well as in percentages
+
+// Naivu
+Linii parsate 0
+Ip bytes 
+200 -> 2704091077.0 
+304 -> 384519.0 
+301 -> 101791.0 
+408 -> 0.0 
+500 -> 940.0 
+404 -> 644171.0 
+302 -> 187891.0 
+HDD - Un worker per file cu 6 workeri a terminat in 1595 ms !
+SSD - Un worker per file cu 6 workeri a terminat in 491 ms !
+
+Linii parsate 0
+Global statuses 
+200 -> 20815630950.0 
+206 -> 2644272701.0 
+406 -> 27861.0 
+400 -> 57272.0 
+304 -> 9225377.0 
+403 -> 83109.0 
+301 -> 3507503.0 
+501 -> 14066.0 
+405 -> 13580.0 
+408 -> 1028.0 
+303 -> 1211448.0 
+500 -> 53103.0 
+401 -> 325.0 
+404 -> 78956562.0 
+302 -> 11593895.0 
+HDD - Un worker per file cu 6 workeri a terminat in 4535 ms !
+SSD - Un worker per file cu 6 workeri a terminat in 1432 ms !
+
+// Lucene
+HDD - Status search for ip: 178.154.179.250 took 1630 ms.
+SSD - Status search for ip: 178.154.179.250 took 284 ms
+status: 200 bytes: 2704091077.0
+status: 301 bytes: 101791.0
+status: 302 bytes: 187891.0
+status: 304 bytes: 384519.0
+status: 404 bytes: 644171.0
+status: 408 bytes: 0.0
+status: 500 bytes: 940.0
+
+Total trafic: 23564648780.0 bytes
+Status 200 88.334% 20815630950
+Status 206 11.221% 2644272701
+Status 404 0.335% 78956562
+Status 302 0.049% 11593895
+Status 304 0.039% 9225377
+Status 301 0.015% 3507503
+Status 303 0.005% 1211448
+Status 403 0.000% 83109
+Status 400 0.000% 57272
+Status 500 0.000% 53103
+Status 406 0.000% 27861
+Status 501 0.000% 14066
+Status 405 0.000% 13580
+Status 408 0.000% 1028
+Status 401 0.000% 325
+Status 256 0.000% 0
+Status 0 0.000% 0
+HDD - Global statuses took: 15896 ms. 
+SSD - Global statuses took: 7567 ms.

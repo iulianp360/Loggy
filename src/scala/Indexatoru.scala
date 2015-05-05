@@ -43,10 +43,10 @@ object Indexatoru {
   private val agent = "\"(.*?)\""
   private val regex = s"$ip $client $user $dateTime $request $status $bytes $referer $agent"
   private val p = Pattern.compile(regex)
-
+  
   def main(args: Array[String]): Unit = {
-    val inputFolder = "c://temp//bkp//input//"
-    val indexFolder = "c://temp//bkp//index//" // fielduri detaliate
+    val inputFolder = "e://workspace//bigd//input//"
+    val indexFolder = "e://workspace//bigd//index//" // fielduri detaliate
 
     indexeazaFisiere(inputFolder, indexFolder)
   }
@@ -56,7 +56,13 @@ object Indexatoru {
     if (inputDir.isDirectory()) {
       inputDir
       .listFiles
-      .foreach(indexAndSave(_, indexDir))
+      .foreach( f =>
+          new Thread(new Runnable() {
+            def run() = {
+              indexAndSave(f, indexDir)
+            }
+          }).start()
+      )
     }  
   }
 
@@ -137,5 +143,4 @@ object Indexatoru {
   private def safeVal(m: Matcher, i: Int): String = Option(m.group(i)).getOrElse("")
   private def safeIntVal(m: Matcher, i: Int): Int = Option(m.group(i).toInt).getOrElse(0)
   private def safeFloatVal(m: Matcher, i: Int): Float = Option(m.group(i).toFloat).getOrElse(0)
-
 }
